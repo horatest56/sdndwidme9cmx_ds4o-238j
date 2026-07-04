@@ -1,0 +1,681 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title>Taller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/css/w3_4.css">
+    <style>
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto auto auto ;
+
+    grid-gap: 3px;   /* juego cpn esto */
+    background-color: #2196F3;
+    padding: 3px;
+    }
+
+    .grid-container > div {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 2px 0;  /* define separacion entre cada foto dentro de la grilla */
+    font-size: 30px;
+    position: relative;    
+    }
+
+   .text-block {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      left: 0px;
+      background-color: black;
+      color: white;
+      font-size: 15px;
+      padding-left: 0px;
+      padding-right: 0px;
+      text-align: center;
+      line-height: 20%;  /* achica altura de la cinta negra */
+    }
+
+   .text-block-1 {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      left: 0px;
+      background-color: black;
+      color: white;
+      font-size: 10px;
+      padding-left: 0px;
+      padding-right: 0px;
+      text-align: center;
+      line-height: 80%;  /* achica altura de la cinta negra */
+    }
+
+    .fondo_nofunciono {
+	background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+     }
+
+     .fondo {
+	    font-weight:bold;
+	    text-decoration:none;
+	    text-shadow:2px 2px 4px white;
+	}
+
+    .fondo-celda {
+          width: 17em;
+          height:260px;
+          
+          background-image:url("static/images/fondo03.jpg");
+          background-size:cover;
+          background-position:center;
+
+           display:flex;
+
+         justify-content:center;
+         align-items:center;
+  	   }
+
+	.fondo-celda:hover{
+	    filter:brightness(145%);
+	    cursor:pointer;
+            transform:scale(1.02);
+	}
+
+.grid video {
+    	width: 17em;
+        height:260px;
+    object-fit: cover; /* Asegura que el video llene el espacio sin deformarse */
+}
+
+    div.grid-container a {
+        text-decoration: none;
+        color: black;
+        cursor: default;
+        font-weight: normal;
+    }
+
+    div.grid-container a span {
+        visibility: hidden;
+        position: absolute;
+        left: 5em;
+        top: -2.3em;
+        background: #ffff6b;
+        width: 17em;
+        border: 1px solid #404040;
+        font-size: 0.4em;
+        padding: 0.1em;
+        cursor: default;
+        line-height: 1.4;
+    }
+
+    div.grid-container a:hover span {
+        visibility: visible;
+    }
+
+    
+    @media (min-width: 600px) {
+    .fotos {
+    width: 100%;
+      height:260px;
+
+    object-fit:cover;
+    cursor:pointer;
+    }
+    }
+
+    @media (max-width: 599px) {
+    .fotos {
+    width: 100%;
+      height:130px;
+
+    object-fit:cover;
+    cursor:pointer;
+    }
+    .text-block {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      left: 0px;
+      background-color: black;
+      color: white;
+      font-size: 8px;
+      padding-left: 0px;
+      padding-right: 0px;
+      text-align: center;
+      line-height: 30%;  /* achica altura de la cinta negra */
+    }
+
+   .text-block-1 {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      left: 0px;
+      background-color: black;
+      color: white;
+      font-size: 5px;
+      padding-left: 0px;
+      padding-right: 0px;
+      text-align: center;
+      line-height: 20%;  /* achica altura de la cinta negra */
+    }
+
+    }
+
+    </style>
+    </head>
+    
+    <body>
+    <div class="w3-container">
+    <div style="border: 1px solid #666666; padding:5px; padding-bottom: 25px;  background-color:#ffffb3;">
+      <h2>FOTOS: Taller Efectos</h2>
+      <a href="javascript:if(confirm('Close window?'))window.close()"><img src='static/icons/exit.jpg' style="float:right" width="50" height="50" ></a>
+        <form action="{{ url_for('imagenes_efectos') }}" method="post">
+            <input type="radio" name="cantidad" value='1'> 1         
+            <input type="radio" name="cantidad" value='2'> 2                     
+            <input type="radio" name="cantidad" value='3' checked> 3 
+            <input type="radio" name="cantidad" value='4'> 4 
+            <input type="radio" name="cantidad" value='6'> 6
+            <input type="radio" name="cantidad" value='8'> 8
+            <input type="radio" name="cantidad" value='12'> 12            
+            <label for="tiposlide"> <span style="padding-right:60px"> </span></label>
+            <select id="tiposlide" name="tiposlide">
+                <option value="elegir">-Elegir-</option>
+                <option value="efectos">Efectos</option>                
+                <option value="gallery">Galeria</option>
+                <option value="una">De a Una</option>                
+            </select>
+            <select id="album" name="album">
+                <option value="elegir">-Elegir-</option>
+                <option value="originales">Originales</option>                
+                <option value="libreria">Libreria 0</option>
+                <option value="libreria1">Libreria 1</option>                
+                <option value="libreria2">Libreria 2</option>
+                <option value="libreria3">Libreria 3</option>                                
+                <option value="personal">Personal</option>                
+                <option value="politico">Politico</option>                
+                <option value="baltico">Baltico</option>                
+            </select>            
+            <input type = "submit" value = "submit" />
+        </form>
+      </div>  
+    </div>
+    <div class="grid-container">
+      <div><img src="static/images/baltico/IMG_20160823_134414623_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160823_165837604.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Copenhague. Biblioteca real</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160823_180520966.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Copenhague. Nyhavn</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160823_180552162_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160823_191850443.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160824_122946910_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Copenhague. Delante de la Iglesia S. Nicolas.</p>
+</div>
+</div>
+ <div><a href="#">
+ <img src="static/images/baltico/IMG_20160824_174323519.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+ <span>Copenhague. Paseando en bicicleta principal medio de transporte. Por la noche se iluminan los escaparates y los barcitos con mesas en la calle</span>
+ </a>
+ </div>
+  <div><img src="static/images/baltico/IMG_20160824_174825471_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Copenhague. Tivoli</p>
+</div>
+</div>
+ <div><a href="#">
+ <img src="static/images/baltico/IMG_20160824_185256938_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+ <span>Copenhague. Paseando por Stroget, calle peatonal. Por la noche se iluminan los escaparates y los barcitos con mesas en la calle</span>
+ </a>
+<div class="text-block">
+<p>Copenhague. Paseando por Stroget, calle peatonal</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160825_164013353.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160825_164111604_TOP.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160825_200036942_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160825_201756906_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160826_083844350_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Llegando a Oslo</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160826_121241195_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Oslo. La calle Karl Johann</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160826_131014959_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Oslo. Palacio Real.</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160826_131234572_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Oslo. Vista desde el palacio real hacia la Karl Johann</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160826_172943943.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Oslo. Fortaleza Akershuss</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160826_173033942.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160826_185753479.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Oslo. El parlamento.</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160826_190250583.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Oslo. Peatonal Karl Johann.</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160826_190700576_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160827_103415593.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Oslo. Vigeland. Parque de esculturas.</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160827_104513094_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160827_104628411.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160827_112116119.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Oslo, regresando de Vigeland y esperando el bondi</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160827_112350796.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Oslo. Vista desde el bus</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160827_120819040_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Oslo Norwegian museum de Historia folk museum</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160827_120839224.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Oslo, folk museum</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160827_122108936_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160827_125059654_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Oslo, caminando por Bygdoy isla de museos</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160827_130417578.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Vista de la bahia de Oslo, delante de la fortaleza</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160827_130426720.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Bygdoy, vista de la bahia de Oslo</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160827_132720263_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block-1">
+<p>Vista del fiordo de Oslo. En Bygod. Y homenaje a los navegantes noruegos y la expedicion al polo sur de Amundsen</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160827_141439566_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Centro del Nobel de la Paz</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160827_144417356.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>la calle Karl Johann</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160827_181129315_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block-1">
+<p>Visitamos GrunnerLocka un barrio estudiantil. Aca volviendo, al costado de un arroyo canalizado</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160827_181527939.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160828_073223469.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Estacion de Oslo, antes de tomar el tren.</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160828_100107772_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160828_120720737_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Tren a Bergen</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160828_125630685.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160828_131631236.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Tren a Bergen</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160828_140227912.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160828_140553774.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160828_194436393_TOP.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Desde la cima del Floyen</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160829_103833690.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Bergen, vista del Bryggen, parte antigua de la Ciudad</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160829_103958039.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160829_105506114.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block-1">
+<p>Bergen caminando por la zona del puerto. Vista del Floyen</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160829_125040192_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Bergen, despues de una llovizna, zona del mercado</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160829_125624096.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Peatonal en Bergen</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160829_152539102.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160829_152938487_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160829_153549917.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160829_155222753_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160829_155400126_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160829_160255617.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160829_161446990.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160829_162754081_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160829_180758786.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160829_181051499_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Bergen, Vista del Bryggen con la luz de la tarde</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160829_194453481_HDR.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos">
+<div class="text-block">
+<p>Vista del puerto y el Bryggen desde nuestra habitacion</p>
+</div>
+</div>
+  <div><img src="static/images/baltico/IMG_20160830_124904053_TOP.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="https://horatest56.github.io/021..github.io/20250304_120237.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160830_130147860.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+
+  <div><img src="https://horatest56.github.io/Cua92_7gbsy6t298/20250302_134046.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="https://horatest56.github.io/Cua92_7gbsy6t298/20250302_134345.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="https://horatest56.github.io/Cua92_7gbsy6t298/20250302_134534.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="https://horatest56.github.io/Cua92_7gbsy6t298/20250304_120237.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="https://horatest56.github.io/Cua92_7gbsy6t298/20250306_092114.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="https://horatest56.github.io/Cua92_7gbsy6t298/20250306_092119.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+  <div><img src="static/images/baltico/IMG_20160825_164013353.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+
+<div>
+<a href="static/PDF/GLOBALGATE.pdf"
+   target="_blank"
+   rel="noopener noreferrer" class="fondo-celda fondo">
+   Factura Iplan
+</a>
+</div>
+
+<div class="grid video">
+	    <a href="#" onclick="reproducirVideo(this,'static/videos/RO_you_got_it.mp4',' '); return false;">
+      		  🎬 Ver video
+    	    </a>
+</div>
+
+<div class="grid video">
+	    <a href="#" onclick="reproducirVideo(this,'static/videos/maquiavelo.webm','https://horatest56.github.io/Cua92_7gbsy6t298/maquiavelo.vtt'); return false;">
+      		  🎬 Ver video
+    	    </a>
+</div>
+  <div><img src="https://horatest56.github.io/Cua92_7gbsy6t298/20250306_092123.jpg"  onclick="onClick(this)" class="w3-hover-opacity fotos"></div>
+
+    </div>
+
+    </body>
+    </html>
+
+
+    <script>
+      var kont=0 ;
+      var kont1=0 ;
+      var flag='0' ;
+      var flag1 = '0'; // brillo
+      var flag2 = '0'; // grisado
+      var flag3 = '0'; // saturate
+      var flag4 = '0'; // hue
+
+      //var css_comun=' filter: saturate(100%)';
+      var css_comun=' filter: ';
+      // poner flag para cada boton. e inicializarlo todos los otros menos el de uno
+      // usar css_comun para ir almacenando
+    </script>
+
+
+     <div id="modal01" class="w3-modal" >      
+            <span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+          <div class="w3-modal-content w3-animate-zoom">
+            <input type="checkbox" id="fname" name="zoom" onchange="openFullscreen()">
+            <label for="zoom"> Ampliar</label>
+            <button onclick="borra();">Clear</button> 
+            <button onclick="background();">URL</button> 
+            <button onclick="gris5();">Gris</button> 
+            <button onclick="brillo1();">Brillo</button> 
+            <button onclick="saturate1();">Saturac</button>         
+            <button onclick="huerotate1();">HUE</button> 
+            <div>
+            <img id="img01" style="width:100%"> 
+            </div>
+            <div id="dato2"></div>
+            <!---
+            <div id="dato4"></div>
+            --->
+          </div>
+        </div>
+
+    <script>
+    function brillo1() {
+     kont1 = kont1 +1 ; 
+     var elem = document.getElementById("img01");
+     var css_prop = window.getComputedStyle(elem, null).getPropertyValue("filter");
+     if (flag1 == '0') {
+       flag1 ='1';
+       css_ini = css_comun;
+     }
+
+     if (kont1 == 1) {
+     css_p = css_ini + ' brightness(100%) '    }
+    if (kont1 == 2) {
+     css_p = css_ini + ' brightness(120%) ' ;
+      }
+    if (kont1 == 3) {
+     css_p = css_ini + ' brightness(150%) ' ;
+      }
+    if (kont1 == 4) {
+     css_p = css_ini + ' brightness(50%) ' ;
+      kont1 = 0 ;
+     }
+    document.getElementById("img01").style = css_p; 
+    document.getElementById("img01").style.width = "100%";  
+    css_comun = css_p ;
+    flag2 = '0' ;
+    flag3 = '0' ;
+    flag4 = '0' ;
+    }
+    </script>
+
+
+    <script>
+    function gris5() {
+     kont1 = kont1 +1 ; 
+     var elem = document.getElementById("img01");
+     var css_prop = window.getComputedStyle(elem, null).getPropertyValue("filter");
+     if (flag2 == '0') {
+       flag2 ='1';
+       css_ini = css_comun ;
+     }
+
+     if (kont1 == 1) {
+     css_p = css_ini + ' grayscale(100%) '    }
+    if (kont1 == 2) {
+     css_p = css_ini + ' grayscale(60%) ' ;
+      }
+    if (kont1 == 3) {
+     css_p = css_ini + ' grayscale(30%) ' ;
+      }
+    if (kont1 == 4) {
+     css_p = css_ini + ' grayscale(0%) ' ;
+      kont1 = 0 ;
+     }
+    document.getElementById("img01").style = css_p; 
+    document.getElementById("img01").style.width = "100%";  
+    // document.getElementById("dato4").innerHTML = css_p ; 
+    css_comun = css_p ;
+    flag1 = '0' ;
+    flag3 = '0' ;
+    flag4 = '0' ;
+    }
+    </script>
+
+
+    <script>
+    function saturate1() {
+     kont1 = kont1 +1 ; 
+     var elem = document.getElementById("img01");
+     var css_prop = window.getComputedStyle(elem, null).getPropertyValue("filter");
+     if (flag3 == '0') {
+       flag3 ='1';
+       css_ini = css_comun ;
+     }
+
+     if (kont1 == 1) {
+     css_p = css_ini + ' saturate(3) '    }
+    if (kont1 == 2) {
+     css_p = css_ini + ' saturate(6) ' ;
+      }
+    if (kont1 == 3) {
+     css_p = css_ini + ' saturate(10) ' ;
+      }
+    if (kont1 == 4) {
+     css_p = css_ini + ' saturate(1) ' ;
+      kont1 = 0 ;
+     }
+    document.getElementById("img01").style = css_p; 
+    document.getElementById("img01").style.width = "100%";  
+    // document.getElementById("dato4").innerHTML = css_p ;
+    css_comun = css_p ;
+    flag1 = '0' ;
+    flag2 = '0' ;
+    flag4 = '0' ;
+    }
+    </script>
+
+
+
+    <script>
+    function huerotate1() {
+     kont1 = kont1 +1 ; 
+     var elem = document.getElementById("img01");
+     var css_prop = window.getComputedStyle(elem, null).getPropertyValue("filter");
+     if (flag4 == '0') {
+       flag4 ='1';
+       css_ini = css_comun ;
+     }
+
+     if (kont1 == 1) {
+     css_p = css_ini + ' hue-rotate(90deg) '    }
+    if (kont1 == 2) {
+     css_p = css_ini + ' hue-rotate(180deg) ' ;
+      }
+    if (kont1 == 3) {
+     css_p = css_ini + ' hue-rotate(270deg) ' ;
+      }
+    if (kont1 == 4) {
+     css_p = css_ini + ' hue-rotate(0deg) ' ;
+      kont1 = 0 ;
+     }
+    document.getElementById("img01").style = css_p; 
+    document.getElementById("img01").style.width = "100%";  
+    // document.getElementById("dato4").innerHTML = css_p ;
+    css_comun = css_p ;
+    flag1 = '0' ;
+    flag2 = '0' ;
+    flag3 = '0' ;
+    }
+    </script>
+
+
+
+    <script>
+      function background() {
+        bg = document.getElementById("img01").src ;
+        document.getElementById("dato2").innerHTML = bg;
+       }
+    </script>
+
+    <script>
+    function borra() {
+        flag1 = '0' ;
+        flag2 = '0' ;
+        flag3 = '0' ;
+        flag4 - '0' ;
+        css_comun='filter: ';
+        document.getElementById("dato2").innerHTML = '  ';
+        document.getElementById("img01").style = css_comun; 
+        document.getElementById("img01").style.width = "100%"; 
+        document.getElementById("modal01").style.display = "none";
+        document.getElementById("img01").className = "img01";
+    }
+    </script>
+
+        <script>
+        function onClick(element) {
+          document.getElementById("img01").src = element.src;
+          document.getElementById("modal01").style.display = "block";
+          }
+        </script>
+
+        <script>
+        var elem = document.getElementById("img01");
+        function openFullscreen()  {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+      }
+
+      }
+        </script> 
+        
+<script>
+function reproducirVideo(link, mvid, subtitulo) {
+    const celda = link.parentElement;
+    celda.innerHTML = `
+        <video controls autoplay>
+            <source src="${mvid}" type="video/webm">
+<track
+                src="${subtitulo}"
+                kind="subtitles"
+                srclang="en"
+                label="Lyrics"
+                default>
+        </video>
+    `;
+}
+</script>
+
+        </body>
+        </html>
+    
